@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoa Ngữ Tinh Hoa - Học Phát Âm & Hán Tự Mỗi Ngày</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Noto Serif SC for authentic Chinese typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@600;700;900&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vermilion: {
+                            50: '#fff5f5',
+                            100: '#fed7d7',
+                            500: '#e53e3e',
+                            600: '#c53030',
+                            700: '#9b2c2c',
+                            800: '#742a2a',
+                        },
+                        amberGold: {
+                            100: '#fef3c7',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        jadeGreen: {
+                            50: '#f0fdf4',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        },
+                        paperWarm: '#FAF8F5',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        chinese: ['"Noto Serif SC"', '"Ma Shan Zheng"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth transitions and scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #FAF8F5;
+            background-image: radial-gradient(#e5e7eb 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF8F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Card Flip effect */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        /* Sound wave animation */
+        @keyframes soundPulse {
+            0%, 100% { height: 6px; }
+            50% { height: 18px; }
+        }
+        .sound-bar {
+            animation: soundPulse 0.8s ease-in-out infinite;
+        }
+        .sound-bar:nth-child(2) { animation-delay: 0.2s; }
+        .sound-bar:nth-child(3) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-rose-100 shadow-sm transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 sm:h-20">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('pronunciation')">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-vermilion-700 to-vermilion-500 text-white flex items-center justify-center font-chinese text-2xl shadow-md shadow-vermilion-500/20">
+                    華
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2">
+                        Hoa Ngữ Tinh Hoa
+                        <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded-full border border-amber-300">2-in-1</span>
+                    </h1>
+                    <p class="text-xs text-slate-500 hidden sm:block">Phát âm Pinyin & Hán tự mỗi ngày (HSK 1-2)</p>
+                </div>
+            </div>
+
+            <!-- Header Quick Stats & Controls -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                <div class="bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-xs">
+                    <i class="fa-solid fa-fire text-amber-500 text-base"></i>
+                    <span id="streakCount" class="text-sm font-bold text-amber-900">0</span>
+                    <span class="text-xs text-amber-700 hidden sm:inline">ngày liên tục</span>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-xs">
+                    <i class="fa-solid fa-check-double text-emerald-600 text-base"></i>
+                    <span id="masteredCount" class="text-sm font-bold text-emerald-900">0</span>
+                    <span class="text-xs text-emerald-700 hidden sm:inline">từ đã thuộc</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs Bar -->
+        <nav class="bg-white border-t border-rose-50 px-2 sm:px-6">
+            <div class="max-w-6xl mx-auto flex items-center justify-between sm:justify-start gap-1 sm:gap-8 overflow-x-auto py-2 no-scrollbar">
+                <button onclick="switchTab('pronunciation')" id="nav-pronunciation" class="nav-btn flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap text-vermilion-700 bg-vermilion-50">
+                    <i class="fa-solid fa-volume-high"></i>
+                    <span>Phát âm & Thanh điệu</span>
+                </button>
+                <button onclick="switchTab('characters')" id="nav-characters" class="nav-btn flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap text-slate-600 hover:text-vermilion-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                    <span>Hán Tự Mỗi Ngày</span>
+                </button>
+                <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap text-slate-600 hover:text-vermilion-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span>Luyện Tập & Quiz</span>
+                </button>
+                <button onclick="switchTab('progress')" id="nav-progress" class="nav-btn flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap text-slate-600 hover:text-vermilion-600 hover:bg-slate-50">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Tiến Độ Học Tập</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- ============================================== -->
+        <!-- TAB 1: PHÁT ÂM & THANH ĐIỆU (PINYIN)           -->
+        <!-- ============================================== -->
+        <section id="tab-pronunciation" class="space-y-8 animate-fadeIn">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-vermilion-700 via-rose-700 to-vermilion-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+                <div class="absolute -right-8 -bottom-10 opacity-15 font-chinese text-9xl select-none pointer-events-none">声调</div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold uppercase tracking-wider mb-3">Nền tảng phát âm Pinyin</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-3">Chinh Phục 4 Thanh Điệu Cơ Bản</h2>
+                    <p class="text-rose-100 text-sm sm:text-base leading-relaxed">
+                        Thanh điệu thay đổi toàn bộ nghĩa của từ trong tiếng Trung. Bấm vào biểu tượng loa để nghe cao độ giọng đọc chuẩn từ trợ lý giọng nói.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4 Tones Interactive Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Tone 1 -->
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">Thanh 1 (Âm Bình)</span>
+                        <span class="text-xl font-bold font-mono text-slate-400 group-hover:text-vermilion-600 transition">55 —</span>
+                    </div>
+                    <div class="text-center my-3">
+                        <div class="font-chinese text-4xl font-bold text-slate-800 mb-1">mā (妈)</div>
+                        <div class="text-sm font-medium text-slate-500">Mẹ • Cao và đều</div>
+                    </div>
+                    <!-- Tone pitch curve graphic -->
+                    <div class="h-12 w-full bg-slate-50 rounded-lg flex items-center justify-center px-4 relative my-3">
+                        <div class="w-full h-1 bg-rose-500 rounded-full"></div>
+                    </div>
+                    <button onclick="speakChinese('mā')" class="w-full mt-2 py-2.5 px-4 rounded-xl bg-vermilion-50 text-vermilion-700 hover:bg-vermilion-600 hover:text-white font-semibold text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-volume-high"></i> Nghe "mā"
+                    </button>
+                </div>
+
+                <!-- Tone 2 -->
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">Thanh 2 (Dương Bình)</span>
+                        <span class="text-xl font-bold font-mono text-slate-400 group-hover:text-amber-500 transition">35 ↗</span>
+                    </div>
+                    <div class="text-center my-3">
+                        <div class="font-chinese text-4xl font-bold text-slate-800 mb-1">má (麻)</div>
+                        <div class="text-sm font-medium text-slate-500">Cây gai / Tê • Lên giọng</div>
+                    </div>
+                    <!-- Tone pitch curve graphic -->
+                    <div class="h-12 w-full bg-slate-50 rounded-lg flex items-center justify-center px-4 relative my-3">
+                        <svg class="w-full h-8 stroke-amber-500 fill-none stroke-[3]" viewBox="0 0 100 30">
+                            <path d="M 10 25 Q 50 20 90 5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <button onclick="speakChinese('má')" class="w-full mt-2 py-2.5 px-4 rounded-xl bg-amber-50 text-amber-800 hover:bg-amber-500 hover:text-white font-semibold text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-volume-high"></i> Nghe "má"
+                    </button>
+                </div>
+
+                <!-- Tone 3 -->
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">Thanh 3 (Thượng Thanh)</span>
+                        <span class="text-xl font-bold font-mono text-slate-400 group-hover:text-emerald-500 transition">214 ∨</span>
+                    </div>
+                    <div class="text-center my-3">
+                        <div class="font-chinese text-4xl font-bold text-slate-800 mb-1">mǎ (马)</div>
+                        <div class="text-sm font-medium text-slate-500">Con ngựa • Xuống rồi lên</div>
+                    </div>
+                    <!-- Tone pitch curve graphic -->
+                    <div class="h-12 w-full bg-slate-50 rounded-lg flex items-center justify-center px-4 relative my-3">
+                        <svg class="w-full h-8 stroke-emerald-500 fill-none stroke-[3]" viewBox="0 0 100 30">
+                            <path d="M 10 10 Q 45 28 85 8" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <button onclick="speakChinese('mǎ')" class="w-full mt-2 py-2.5 px-4 rounded-xl bg-emerald-50 text-emerald-800 hover:bg-emerald-600 hover:text-white font-semibold text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-volume-high"></i> Nghe "mǎ"
+                    </button>
+                </div>
+
+                <!-- Tone 4 -->
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg">Thanh 4 (Khứ Thanh)</span>
+                        <span class="text-xl font-bold font-mono text-slate-400 group-hover:text-purple-600 transition">51 ↘</span>
+                    </div>
+                    <div class="text-center my-3">
+                        <div class="font-chinese text-4xl font-bold text-slate-800 mb-1">mà (骂)</div>
+                        <div class="text-sm font-medium text-slate-500">Mắng / Chửi • Dứt khoát</div>
+                    </div>
+                    <!-- Tone pitch curve graphic -->
+                    <div class="h-12 w-full bg-slate-50 rounded-lg flex items-center justify-center px-4 relative my-3">
+                        <svg class="w-full h-8 stroke-purple-500 fill-none stroke-[3]" viewBox="0 0 100 30">
+                            <path d="M 10 5 L 90 25" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <button onclick="speakChinese('mà')" class="w-full mt-2 py-2.5 px-4 rounded-xl bg-purple-50 text-purple-700 hover:bg-purple-600 hover:text-white font-semibold text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-volume-high"></i> Nghe "mà"
+                    </button>
+                </div>
+            </div>
+
+            <!-- Listening Matrix (Sound Lab) -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-headphones text-vermilion-600"></i> Phòng Luyện Tai & Cặp Âm Tương Phản
+                        </h3>
+                        <p class="text-sm text-slate-500 mt-1">Bấm để nghe sự khác biệt rõ rệt giữa các thanh điệu cùng một phụ âm</p>
+                    </div>
+                    <!-- Speech Rate selector -->
+                    <div class="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 text-xs">
+                        <span class="font-medium text-slate-600">Tốc độ đọc:</span>
+                        <select id="speechRate" class="bg-transparent font-semibold text-vermilion-700 outline-none cursor-pointer">
+                            <option value="0.75">Chậm (0.75x)</option>
+                            <option value="1.0" selected>Chuẩn (1.0x)</option>
+                            <option value="1.2">Nhanh (1.2x)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tone Table Comparison -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-100 text-slate-500 text-xs uppercase tracking-wider">
+                                <th class="py-3 px-4 font-semibold">Âm cơ sở</th>
+                                <th class="py-3 px-4 font-semibold">Thanh 1 (—)</th>
+                                <th class="py-3 px-4 font-semibold">Thanh 2 (ˊ)</th>
+                                <th class="py-3 px-4 font-semibold">Thanh 3 (ˇ)</th>
+                                <th class="py-3 px-4 font-semibold">Thanh 4 (ˋ)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="toneMatrixBody" class="divide-y divide-slate-100 text-sm font-medium">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Quick Tone Rule Tips -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-amber-50/60 border border-amber-200 rounded-2xl p-5">
+                    <h4 class="font-bold text-amber-900 flex items-center gap-2 text-base mb-2">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i> Quy tắc biến điệu hai thanh 3
+                    </h4>
+                    <p class="text-sm text-amber-800 leading-relaxed">
+                        Khi hai âm thanh 3 đi liền nhau (ví dụ: <span class="font-chinese font-bold">你好</span>: nǐ + hǎo), từ thứ nhất sẽ đổi đọc thành <strong>thanh 2</strong>: <span class="bg-amber-200 px-1.5 py-0.5 rounded text-amber-950 font-semibold font-mono">ní hǎo</span>.
+                    </p>
+                    <button onclick="speakChinese('你好')" class="mt-3 text-xs font-bold text-amber-900 bg-amber-200 hover:bg-amber-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-play"></i> Nghe phát âm mẫu: 你好 (ní hǎo)
+                    </button>
+                </div>
+
+                <div class="bg-rose-50/60 border border-rose-200 rounded-2xl p-5">
+                    <h4 class="font-bold text-rose-900 flex items-center gap-2 text-base mb-2">
+                        <i class="fa-solid fa-bell text-rose-500"></i> Thanh nhẹ (Khinh thanh)
+                    </h4>
+                    <p class="text-sm text-rose-800 leading-relaxed">
+                        Là âm tiết không đánh dấu thanh điệu, được phát âm cực kỳ ngắn, nhẹ và nhanh. Ví dụ như trợ từ nghi vấn <span class="font-chinese font-bold">吗</span> (ma), hoặc từ láy <span class="font-chinese font-bold">妈妈</span> (māma).
+                    </p>
+                    <button onclick="speakChinese('妈妈')" class="mt-3 text-xs font-bold text-rose-900 bg-rose-200 hover:bg-rose-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-play"></i> Nghe phát âm mẫu: 妈妈 (māma)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 2: HÁN TỰ MỖI NGÀY (FLASHCARDS)           -->
+        <!-- ============================================== -->
+        <section id="tab-characters" class="space-y-6 hidden animate-fadeIn">
+            <!-- Header Filter Bar -->
+            <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+                    <button onclick="filterCards('ALL')" id="filter-ALL" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-vermilion-600 text-white shadow-sm transition">
+                        Tất cả (<span id="count-all">0</span>)
+                    </button>
+                    <button onclick="filterCards('HSK1')" id="filter-HSK1" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                        HSK 1 (<span id="count-hsk1">0</span>)
+                    </button>
+                    <button onclick="filterCards('HSK2')" id="filter-HSK2" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                        HSK 2 (<span id="count-hsk2">0</span>)
+                    </button>
+                    <button onclick="filterCards('FAVORITE')" id="filter-FAVORITE" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-star text-amber-500"></i> Yêu thích
+                    </button>
+                </div>
+
+                <!-- Search Input -->
+                <div class="relative w-full md:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Tìm Hán tự, Pinyin, nghĩa..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-vermilion-500 text-sm bg-slate-50 focus:bg-white transition">
+                </div>
+            </div>
+
+            <!-- Single Flip Flashcard Showcase (Focus Study Mode) -->
+            <div class="bg-gradient-to-b from-white to-amber-50/40 rounded-3xl p-6 sm:p-8 border border-amber-200/80 shadow-md">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center gap-1.5 text-xs font-bold text-vermilion-700 bg-vermilion-100 px-3 py-1 rounded-full">
+                            <i class="fa-solid fa-sparkles"></i> Chế độ Tiêu Điểm
+                        </span>
+                        <span id="focusCardLevel" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">HSK 1</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleStarCurrentFocus()" id="focusStarBtn" class="text-slate-300 hover:text-amber-400 text-lg transition p-1" title="Lưu yêu thích">
+                            <i class="fa-solid fa-star"></i>
+                        </button>
+                        <button onclick="speakChinese(currentFocusCard.hanzi)" class="w-9 h-9 rounded-full bg-vermilion-50 hover:bg-vermilion-600 hover:text-white text-vermilion-600 flex items-center justify-center transition" title="Nghe phát âm">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Flip Box Container -->
+                <div class="perspective-1000 my-4 cursor-pointer" onclick="toggleFocusFlip()">
+                    <div id="focusFlipCard" class="relative w-full min-h-[260px] sm:min-h-[280px] bg-white rounded-3xl shadow-sm border border-slate-200/90 transition-transform duration-500 transform-style-3d p-6 flex flex-col items-center justify-center text-center">
+                        <!-- Front Content -->
+                        <div id="focusCardFront" class="w-full flex flex-col items-center justify-center space-y-3">
+                            <div id="focusHanzi" class="font-chinese text-7xl sm:text-8xl font-black text-slate-900 tracking-wide select-none drop-shadow-sm">
+                                你好
+                            </div>
+                            <div id="focusPinyin" class="text-2xl font-bold text-vermilion-600 tracking-wide">
+                                nǐ hǎo
+                            </div>
+                            <p class="text-xs text-slate-400 mt-2 flex items-center gap-1">
+                                <i class="fa-solid fa-rotate"></i> Chạm để lật xem nghĩa & câu ví dụ
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Details revealed below flip card -->
+                <div id="focusCardDetails" class="bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-slate-200 text-left space-y-2 mt-4">
+                    <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Nghĩa tiếng Việt:</span>
+                            <span id="focusMeaning" class="ml-2 font-bold text-base text-slate-900">Xin chào</span>
+                        </div>
+                        <div class="text-xs text-slate-500">
+                            Hán Việt: <span id="focusHanViet" class="font-semibold text-slate-700">NHĨ HẢO</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Ví dụ:</span>
+                        <div class="mt-1 flex items-center justify-between">
+                            <div>
+                                <p id="focusExampleZh" class="font-chinese text-base font-medium text-slate-800">你好！很高兴认识你。</p>
+                                <p id="focusExampleVi" class="text-xs text-slate-500">Xin chào! Rất vui được quen biết bạn.</p>
+                            </div>
+                            <button onclick="event.stopPropagation(); speakChinese(currentFocusCard.exampleZh)" class="text-vermilion-600 hover:text-vermilion-800 p-2 text-sm" title="Nghe câu ví dụ">
+                                <i class="fa-solid fa-volume-low"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls for Focus Card -->
+                <div class="flex items-center justify-between mt-6">
+                    <button onclick="prevFocusCard()" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-semibold text-xs sm:text-sm flex items-center gap-2 transition">
+                        <i class="fa-solid fa-arrow-left"></i> Từ trước
+                    </button>
+                    <span id="focusCardIndex" class="text-xs font-bold text-slate-500">1 / 25</span>
+                    <button onclick="nextFocusCard()" class="px-4 py-2 rounded-xl bg-vermilion-600 hover:bg-vermilion-700 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 transition shadow-sm">
+                        Từ kế tiếp <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Full Grid of Flashcards -->
+            <div>
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-grid-2 text-vermilion-600"></i> Danh Sách Toàn Bộ Thẻ Từ Vựng
+                </h3>
+                <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Cards will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 3: LUYỆN TẬP & QUIZ                        -->
+        <!-- ============================================== -->
+        <section id="tab-quiz" class="space-y-6 hidden animate-fadeIn">
+            <!-- Quiz Mode Switcher -->
+            <div class="flex flex-col sm:flex-row items-center justify-between bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 gap-4">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800">Thử Thách Phản Xạ Hán Ngữ</h3>
+                    <p class="text-xs sm:text-sm text-slate-500">Kiểm tra khả năng nhận diện thanh điệu và nhớ mặt chữ Hán</p>
+                </div>
+                <div class="flex rounded-xl bg-slate-100 p-1 w-full sm:w-auto">
+                    <button onclick="setQuizType('meaning')" id="quizType-meaning" class="flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs sm:text-sm font-bold bg-white text-vermilion-700 shadow-sm transition">
+                        Đoán Nghĩa Hán Tự
+                    </button>
+                    <button onclick="setQuizType('tone')" id="quizType-tone" class="flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition">
+                        Nhận Diện Thanh Điệu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Arena Card -->
+            <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg text-center max-w-2xl mx-auto relative overflow-hidden">
+                <!-- Top Quiz Progress Bar -->
+                <div class="w-full bg-slate-100 h-2 rounded-full mb-8 overflow-hidden">
+                    <div id="quizProgressBar" class="bg-gradient-to-r from-vermilion-500 to-amber-500 h-full rounded-full transition-all duration-300" style="width: 20%"></div>
+                </div>
+
+                <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase tracking-wider mb-6">
+                    <span id="quizQuestionCount">Câu 1 / 10</span>
+                    <span class="flex items-center gap-1 text-emerald-600">
+                        <i class="fa-solid fa-trophy"></i> Điểm: <span id="quizCurrentScore" class="font-extrabold text-sm">0</span>
+                    </span>
+                </div>
+
+                <!-- Question Prompt -->
+                <div class="my-6">
+                    <div id="quizPromptSubtitle" class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">
+                        Từ này có nghĩa là gì?
+                    </div>
+
+                    <!-- Hanzi Display in Quiz -->
+                    <div class="flex items-center justify-center gap-3">
+                        <div id="quizPromptHanzi" class="font-chinese text-6xl sm:text-7xl font-black text-slate-900 select-none">
+                            谢谢
+                        </div>
+                        <button onclick="speakChineseCurrentQuiz()" class="w-12 h-12 rounded-2xl bg-rose-50 text-vermilion-600 hover:bg-vermilion-600 hover:text-white flex items-center justify-center text-lg transition shadow-xs">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                    </div>
+
+                    <div id="quizPromptPinyin" class="text-xl font-bold text-amber-600 mt-2">
+                        xièxie
+                    </div>
+                </div>
+
+                <!-- Answer Options (4 choices) -->
+                <div id="quizOptionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-8">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Feedback Banner -->
+                <div id="quizFeedback" class="hidden mt-6 p-4 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2"></div>
+
+                <!-- Next Button -->
+                <div class="mt-8 flex justify-center">
+                    <button id="quizNextBtn" onclick="nextQuizQuestion()" class="hidden px-8 py-3 rounded-xl bg-vermilion-600 hover:bg-vermilion-700 text-white font-bold text-sm shadow-md transition flex items-center gap-2">
+                        <span>Câu kế tiếp</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 4: TIẾN ĐỘ HỌC TẬP (STATS & STORAGE)       -->
+        <!-- ============================================== -->
+        <section id="tab-progress" class="space-y-6 hidden animate-fadeIn">
+            <!-- Overview Stat Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-50 text-vermilion-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Tổng từ đã xem</div>
+                        <div id="statTotalStudied" class="text-2xl font-black text-slate-800">0</div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Đã thuộc lòng</div>
+                        <div id="statMastered" class="text-2xl font-black text-slate-800">0</div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Tỷ lệ Quiz đúng</div>
+                        <div id="statAccuracy" class="text-2xl font-black text-slate-800">0%</div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Từ vựng yêu thích</div>
+                        <div id="statFavorites" class="text-2xl font-black text-slate-800">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz History & Achievements -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Accuracy Visual card -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs md:col-span-1 flex flex-col items-center justify-center text-center">
+                    <h4 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Mức độ hoàn thành HSK 1-2</h4>
+                    
+                    <!-- Circular percentage ring -->
+                    <div class="relative w-36 h-36 flex items-center justify-center">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="progressCirclePath" class="text-vermilion-600 transition-all duration-700" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="absolute flex flex-col items-center justify-center">
+                            <span id="circlePercentText" class="text-3xl font-black text-slate-900">0%</span>
+                            <span class="text-[10px] text-slate-400 uppercase font-semibold">Toàn bộ kho từ</span>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-500 mt-4 leading-relaxed">
+                        Hãy tiếp tục luyện tập đều đặn mỗi ngày ít nhất 5 từ để ghi nhớ lâu dài!
+                    </p>
+                </div>
+
+                <!-- Learning Log / Detail Table -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs md:col-span-2 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-amber-500"></i> Lịch sử và thiết lập
+                        </h4>
+                        <button onclick="resetAllProgress()" class="text-xs font-semibold text-rose-600 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-trash-can"></i> Xóa dữ liệu học
+                        </button>
+                    </div>
+
+                    <div class="space-y-3 pt-2">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 text-sm">
+                            <span class="text-slate-600 font-medium">Số lượt thi trắc nghiệm đã làm:</span>
+                            <span id="statQuizTotalTries" class="font-bold text-slate-900">0 lần</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 text-sm">
+                            <span class="text-slate-600 font-medium">Số câu trả lời đúng tuyệt đối:</span>
+                            <span id="statQuizCorrectAnswers" class="font-bold text-emerald-600">0 câu</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 text-sm">
+                            <span class="text-slate-600 font-medium">Trợ lý phát âm Web Speech:</span>
+                            <span id="speechApiStatus" class="font-bold text-slate-900 flex items-center gap-1 text-xs">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> zh-CN khả dụng
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/60 mt-4">
+                        <p class="text-xs text-amber-900 leading-relaxed font-medium">
+                            <i class="fa-solid fa-circle-info mr-1"></i> Mẹo ôn tập: Sử dụng tai nghe để nhận biết chính xác độ vang và ngắt âm của thanh 3 và thanh 4 trong tiếng Quan Thoại.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200/70 py-6 mt-12 text-center text-xs text-slate-500">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>© 2026 Hoa Ngữ Tinh Hoa. Hợp nhất HanYu Speak & Hán Tự Mỗi Ngày.</p>
+            <div class="flex items-center gap-4 text-slate-400">
+                <span class="hover:text-vermilion-600 cursor-pointer" onclick="switchTab('pronunciation')">Phát âm</span>
+                <span>•</span>
+                <span class="hover:text-vermilion-600 cursor-pointer" onclick="switchTab('characters')">Flashcards</span>
+                <span>•</span>
+                <span class="hover:text-vermilion-600 cursor-pointer" onclick="switchTab('quiz')">Quiz</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification for feedback -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMessage">Thông báo</span>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- JAVASCRIPT APP LOGIC & DATA                    -->
+    <!-- ============================================== -->
+    <script>
+        /**
+         * Comprehensive Chinese Vocabulary Data (HSK 1 & HSK 2)
+         */
+        const VOCABULARY_DATA = [
+            // Basic & HSK 1
+            {
+                id: 1,
+                hanzi: "你好",
+                pinyin: "nǐ hǎo",
+                toneType: "3-3",
+                hanViet: "NHĨ HẢO",
+                meaning: "Xin chào",
+                level: "HSK1",
+                exampleZh: "你好！很高兴认识你。",
+                exampleVi: "Xin chào! Rất vui được quen biết bạn."
+            },
+            {
+                id: 2,
+                hanzi: "谢谢",
+                pinyin: "xièxie",
+                toneType: "4-0",
+                hanViet: "TẠ TẠ",
+                meaning: "Cảm ơn",
+                level: "HSK1",
+                exampleZh: "太谢谢你的帮助了！",
+                exampleVi: "Vô cùng cảm ơn sự giúp đỡ của bạn!"
+            },
+            {
+                id: 3,
+                hanzi: "再见",
+                pinyin: "zàijiàn",
+                toneType: "4-4",
+                hanViet: "TÁI KIẾN",
+                meaning: "Tạm biệt",
+                level: "HSK1",
+                exampleZh: "明天见，再见！",
+                exampleVi: "Mai gặp lại nhé, tạm biệt!"
+            },
+            {
+                id: 4,
+                hanzi: "学",
+                pinyin: "xué",
+                toneType: "2",
+                hanViet: "HỌC",
+                meaning: "Học tập",
+                level: "HSK1",
+                exampleZh: "我喜欢学中文。",
+                exampleVi: "Tôi thích học tiếng Trung."
+            },
+            {
+                id: 5,
+                hanzi: "爱",
+                pinyin: "ài",
+                toneType: "4",
+                hanViet: "ÁI",
+                meaning: "Yêu, thích",
+                level: "HSK1",
+                exampleZh: "我爱我的家人。",
+                exampleVi: "Tôi yêu gia đình của mình."
+            },
+            {
+                id: 6,
+                hanzi: "吃",
+                pinyin: "chī",
+                toneType: "1",
+                hanViet: "NGẬT",
+                meaning: "Ăn",
+                level: "HSK1",
+                exampleZh: "你想吃什么？",
+                exampleVi: "Bạn muốn ăn món gì?"
+            },
+            {
+                id: 7,
+                hanzi: "喝",
+                pinyin: "hē",
+                toneType: "1",
+                hanViet: "HÁT",
+                meaning: "Uống",
+                level: "HSK1",
+                exampleZh: "我想喝一杯水。",
+                exampleVi: "Tôi muốn uống một cốc nước."
+            },
+            {
+                id: 8,
+                hanzi: "家",
+                pinyin: "jiā",
+                toneType: "1",
+                hanViet: "GIA",
+                meaning: "Nhà, gia đình",
+                level: "HSK1",
+                exampleZh: "我的家在河内。",
+                exampleVi: "Nhà của tôi ở Hà Nội."
+            },
+            {
+                id: 9,
+                hanzi: "看",
+                pinyin: "kàn",
+                toneType: "4",
+                hanViet: "KHÁN",
+                meaning: "Xem, nhìn, đọc",
+                level: "HSK1",
+                exampleZh: "你在看什么书？",
+                exampleVi: "Bạn đang đọc cuốn sách gì thế?"
+            },
+            {
+                id: 10,
+                hanzi: "去",
+                pinyin: "qù",
+                toneType: "4",
+                hanViet: "KHỨ",
+                meaning: "Đi đến",
+                level: "HSK1",
+                exampleZh: "我们去学校吧。",
+                exampleVi: "Chúng ta cùng đến trường nhé."
+            },
+            {
+                id: 11,
+                hanzi: "来",
+                pinyin: "lái",
+                toneType: "2",
+                hanViet: "LAI",
+                meaning: "Đến, tới",
+                level: "HSK1",
+                exampleZh: "欢迎你来我家玩！",
+                exampleVi: "Chào mừng bạn tới nhà tôi chơi!"
+            },
+            {
+                id: 12,
+                hanzi: "猫",
+                pinyin: "māo",
+                toneType: "1",
+                hanViet: "MIÊU",
+                meaning: "Con mèo",
+                level: "HSK1",
+                exampleZh: "这只小猫很可爱。",
+                exampleVi: "Chú mèo con này rất đáng yêu."
+            },
+            {
+                id: 13,
+                hanzi: "狗",
+                pinyin: "gǒu",
+                toneType: "3",
+                hanViet: "CẨU",
+                meaning: "Con chó",
+                level: "HSK1",
+                exampleZh: "那只大狗在跑。",
+                exampleVi: "Chú chó to kia đang chạy."
+            },
+            {
+                id: 14,
+                hanzi: "老师",
+                pinyin: "lǎoshī",
+                toneType: "3-1",
+                hanViet: "LÃO SƯ",
+                meaning: "Thầy/cô giáo",
+                level: "HSK1",
+                exampleZh: "张老师教我们汉语。",
+                exampleVi: "Thầy Trương dạy chúng tôi tiếng Hán."
+            },
+            {
+                id: 15,
+                hanzi: "朋友",
+                pinyin: "péngyou",
+                toneType: "2-0",
+                hanViet: "BẰNG HỮU",
+                meaning: "Bạn bè",
+                level: "HSK1",
+                exampleZh: "他是我的好朋友。",
+                exampleVi: "Anh ấy là bạn thân của tôi."
+            },
+
+            // HSK 2 Vocabulary
+            {
+                id: 16,
+                hanzi: "帮助",
+                pinyin: "bāngzhù",
+                toneType: "1-4",
+                hanViet: "BANG TRỢ",
+                meaning: "Giúp đỡ",
+                level: "HSK2",
+                exampleZh: "请帮助我一下。",
+                exampleVi: "Xin hãy giúp tôi một chút."
+            },
+            {
+                id: 17,
+                hanzi: "时间",
+                pinyin: "shíjiān",
+                toneType: "2-1",
+                hanViet: "THỜI GIAN",
+                meaning: "Thời gian",
+                level: "HSK2",
+                exampleZh: "你有时间吗？",
+                exampleVi: "Bạn có thời gian rảnh không?"
+            },
+            {
+                id: 18,
+                hanzi: "便宜",
+                pinyin: "piányi",
+                toneType: "2-0",
+                hanViet: "TIỆN NGHI",
+                meaning: "Rẻ (giá cả)",
+                level: "HSK2",
+                exampleZh: "这件衣服很便宜。",
+                exampleVi: "Bộ quần áo này rất rẻ."
+            },
+            {
+                id: 19,
+                hanzi: "快乐",
+                pinyin: "kuàilè",
+                toneType: "4-4",
+                hanViet: "KHOÁI LẠC",
+                meaning: "Vui vẻ, hạnh phúc",
+                level: "HSK2",
+                exampleZh: "祝你生日快乐！",
+                exampleVi: "Chúc bạn sinh nhật vui vẻ!"
+            },
+            {
+                id: 20,
+                hanzi: "跑步",
+                pinyin: "pǎobù",
+                toneType: "3-4",
+                hanViet: "BÀO BỘ",
+                meaning: "Chạy bộ",
+                level: "HSK2",
+                exampleZh: "我每天早上都跑步。",
+                exampleVi: "Mỗi sáng tôi đều chạy bộ."
+            },
+            {
+                id: 21,
+                hanzi: "懂",
+                pinyin: "dǒng",
+                toneType: "3",
+                hanViet: "HIỂU",
+                meaning: "Hiểu, nắm rõ",
+                level: "HSK2",
+                exampleZh: "你懂我的意思吗？",
+                exampleVi: "Bạn có hiểu ý tôi không?"
+            },
+            {
+                id: 22,
+                hanzi: "介绍",
+                pinyin: "jièshào",
+                toneType: "4-4",
+                hanViet: "GIỚI THIỆU",
+                meaning: "Giới thiệu",
+                level: "HSK2",
+                exampleZh: "我来介绍一下新同事。",
+                exampleVi: "Tôi xin giới thiệu một đồng nghiệp mới."
+            },
+            {
+                id: 23,
+                hanzi: "欢迎",
+                pinyin: "huānyíng",
+                toneType: "1-2",
+                hanViet: "HOAN NGHÊNH",
+                meaning: "Chào đón",
+                level: "HSK2",
+                exampleZh: "热烈欢迎大家！",
+                exampleVi: "Nhiệt liệt hoan nghênh mọi người!"
+            },
+            {
+                id: 24,
+                hanzi: "希望",
+                pinyin: "xīwàng",
+                toneType: "1-4",
+                hanViet: "HY VỌNG",
+                meaning: "Hy vọng, mong muốn",
+                level: "HSK2",
+                exampleZh: "希望你一切都好。",
+                exampleVi: "Hy vọng bạn mọi điều tốt đẹp."
+            },
+            {
+                id: 25,
+                hanzi: "身体",
+                pinyin: "shēntǐ",
+                toneType: "1-3",
+                hanViet: "THÂN THỂ",
+                meaning: "Sức khỏe, cơ thể",
+                level: "HSK2",
+                exampleZh: "祝你身体健康！",
+                exampleVi: "Chúc bạn sức khỏe dồi dào!"
+            }
+        ];
+
+        // Contrast Pairs for Tone Pronunciation Matrix
+        const TONE_MATRIX_DATA = [
+            { base: "ma", t1: "mā (妈 - mẹ)", t2: "má (麻 - tê)", t3: "mǎ (马 - ngựa)", t4: "mà (骂 - mắng)" },
+            { base: "ba", t1: "bā (八 - tám)", t2: "bá (拔 - nhổ)", t3: "bǎ (把 - nắm)", t4: "bà (爸 - bố)" },
+            { base: "tang", t1: "tāng (汤 - canh)", t2: "táng (糖 - đường)", t3: "tǎng (躺 - nằm)", t4: "tàng (烫 - nóng bỏng)" },
+            { base: "shi", t1: "shī (师 - thầy)", t2: "shí (十 - mười)", t3: "shǐ (始 - bắt đầu)", t4: "shì (是 - là/đúng)" },
+        ];
+
+        /**
+         * State Management & LocalStorage
+         */
+        const STORAGE_KEY = "hanyu_master_progress_v2";
+
+        let userState = {
+            streak: 1,
+            lastVisitDate: new Date().toDateString(),
+            masteredWords: [], // ids
+            favorites: [],     // ids
+            studiedWords: [],  // ids
+            quizStats: {
+                totalAttempts: 0,
+                correctCount: 0
+            }
+        };
+
+        // Load storage
+        function loadState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    userState = { ...userState, ...parsed };
+                    
+                    // Check streak daily update
+                    const today = new Date().toDateString();
+                    if (userState.lastVisitDate !== today) {
+                        const yesterday = new Date(Date.now() - 86400000).toDateString();
+                        if (userState.lastVisitDate === yesterday) {
+                            userState.streak += 1;
+                        }
+                        userState.lastVisitDate = today;
+                        saveState();
+                    }
+                }
+            } catch (e) {
+                console.error("Storage error:", e);
+            }
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(userState));
+                updateUIStats();
+            } catch (e) {
+                console.error("Save error:", e);
+            }
+        }
+
+        /**
+         * Web Speech Synthesis API Implementation
+         */
+        let chineseVoice = null;
+
+        function initVoices() {
+            if ('speechSynthesis' in window) {
+                const updateVoiceList = () => {
+                    const voices = window.speechSynthesis.getVoices();
+                    // Prefer Mainland Mandarin (zh-CN)
+                    chineseVoice = voices.find(v => v.lang === 'zh-CN' || v.lang === 'zh_CN') ||
+                                   voices.find(v => v.lang.startsWith('zh'));
+                    
+                    const statusEl = document.getElementById('speechApiStatus');
+                    if (statusEl) {
+                        if (chineseVoice) {
+                            statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> ${chineseVoice.name} (${chineseVoice.lang})`;
+                        } else {
+                            statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> Mặc định thiết bị (zh-CN)`;
+                        }
+                    }
+                };
+
+                updateVoiceList();
+                if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                    window.speechSynthesis.onvoiceschanged = updateVoiceList;
+                }
+            } else {
+                showToast("Trình duyệt không hỗ trợ Web Speech API", "error");
+            }
+        }
+
+        function speakChinese(text) {
+            if (!('speechSynthesis' in window)) {
+                showToast("Trình duyệt không hỗ trợ phát âm!", "error");
+                return;
+            }
+
+            window.speechSynthesis.cancel(); // Stop current speech
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN';
+            
+            const rateSelect = document.getElementById('speechRate');
+            const rate = rateSelect ? parseFloat(rateSelect.value) : 1.0;
+            utterance.rate = rate;
+
+            if (chineseVoice) {
+                utterance.voice = chineseVoice;
+            }
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        /**
+         * Tab Navigation Switcher
+         */
+        function switchTab(tabId) {
+            const tabs = ['pronunciation', 'characters', 'quiz', 'progress'];
+            tabs.forEach(t => {
+                const content = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`nav-${t}`);
+                if (t === tabId) {
+                    content.classList.remove('hidden');
+                    btn.className = "nav-btn flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap text-vermilion-700 bg-vermilion-50 shadow-xs";
+                } else {
+                    content.classList.add('hidden');
+                    btn.className = "nav-btn flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap text-slate-600 hover:text-vermilion-600 hover:bg-slate-50";
+                }
+            });
+
+            // Specific refresh per tab
+            if (tabId === 'characters') {
+                renderFilteredCards();
+            } else if (tabId === 'quiz') {
+                initQuiz();
+            } else if (tabId === 'progress') {
+                updateUIStats();
+            }
+        }
+
+        /**
+         * Render Pronunciation Tone Comparison Table
+         */
+        function renderToneMatrix() {
+            const tbody = document.getElementById('toneMatrixBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            TONE_MATRIX_DATA.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-rose-50/40 transition group";
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-mono font-bold text-slate-700">${row.base}</td>
+                    <td class="py-3 px-4">
+                        <button onclick="speakChinese('${row.t1.split(' ')[0]}')" class="text-slate-800 hover:text-vermilion-600 font-medium inline-flex items-center gap-1.5 bg-slate-50 group-hover:bg-white px-2.5 py-1 rounded-lg border border-slate-100 transition">
+                            <i class="fa-solid fa-volume-low text-xs text-slate-400"></i> ${row.t1}
+                        </button>
+                    </td>
+                    <td class="py-3 px-4">
+                        <button onclick="speakChinese('${row.t2.split(' ')[0]}')" class="text-slate-800 hover:text-amber-600 font-medium inline-flex items-center gap-1.5 bg-slate-50 group-hover:bg-white px-2.5 py-1 rounded-lg border border-slate-100 transition">
+                            <i class="fa-solid fa-volume-low text-xs text-slate-400"></i> ${row.t2}
+                        </button>
+                    </td>
+                    <td class="py-3 px-4">
+                        <button onclick="speakChinese('${row.t3.split(' ')[0]}')" class="text-slate-800 hover:text-emerald-600 font-medium inline-flex items-center gap-1.5 bg-slate-50 group-hover:bg-white px-2.5 py-1 rounded-lg border border-slate-100 transition">
+                            <i class="fa-solid fa-volume-low text-xs text-slate-400"></i> ${row.t3}
+                        </button>
+                    </td>
+                    <td class="py-3 px-4">
+                        <button onclick="speakChinese('${row.t4.split(' ')[0]}')" class="text-slate-800 hover:text-purple-600 font-medium inline-flex items-center gap-1.5 bg-slate-50 group-hover:bg-white px-2.5 py-1 rounded-lg border border-slate-100 transition">
+                            <i class="fa-solid fa-volume-low text-xs text-slate-400"></i> ${row.t4}
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        /**
+         * Flashcard Mode (Single Focus & Full Grid)
+         */
+        let currentFilter = 'ALL';
+        let searchQuery = '';
+        let currentFocusIndex = 0;
+        let filteredVocabList = [...VOCABULARY_DATA];
+        let currentFocusCard = VOCABULARY_DATA[0];
+
+        function filterCards(level) {
+            currentFilter = level;
+            // Update filter button styling
+            const buttons = ['ALL', 'HSK1', 'HSK2', 'FAVORITE'];
+            buttons.forEach(b => {
+                const el = document.getElementById(`filter-${b}`);
+                if (b === level) {
+                    el.className = "filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-vermilion-600 text-white shadow-sm transition";
+                } else {
+                    el.className = "filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition";
+                }
+            });
+            renderFilteredCards();
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+            renderFilteredCards();
+        }
+
+        function renderFilteredCards() {
+            filteredVocabList = VOCABULARY_DATA.filter(item => {
+                const matchFilter = currentFilter === 'ALL' ? true :
+                                    currentFilter === 'FAVORITE' ? userState.favorites.includes(item.id) :
+                                    item.level === currentFilter;
+                
+                const matchSearch = searchQuery === '' || 
+                                    item.hanzi.toLowerCase().includes(searchQuery) ||
+                                    item.pinyin.toLowerCase().includes(searchQuery) ||
+                                    item.meaning.toLowerCase().includes(searchQuery) ||
+                                    item.hanViet.toLowerCase().includes(searchQuery);
+
+                return matchFilter && matchSearch;
+            });
+
+            // Update badge counts
+            document.getElementById('count-all').innerText = VOCABULARY_DATA.length;
+            document.getElementById('count-hsk1').innerText = VOCABULARY_DATA.filter(x => x.level === 'HSK1').length;
+            document.getElementById('count-hsk2').innerText = VOCABULARY_DATA.filter(x => x.level === 'HSK2').length;
+
+            // Render Focus Card
+            if (filteredVocabList.length > 0) {
+                if (currentFocusIndex >= filteredVocabList.length) currentFocusIndex = 0;
+                updateFocusCardDisplay();
+            }
+
+            // Render Grid
+            const grid = document.getElementById('cardsGrid');
+            grid.innerHTML = '';
+
+            if (filteredVocabList.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-400">
+                        <i class="fa-solid fa-book-open text-4xl mb-2"></i>
+                        <p class="text-sm">Không tìm thấy từ vựng nào phù hợp.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredVocabList.forEach((item) => {
+                const isFavorite = userState.favorites.includes(item.id);
+                const isMastered = userState.masteredWords.includes(item.id);
+
+                const cardEl = document.createElement('div');
+                cardEl.className = `bg-white rounded-2xl p-5 border ${isMastered ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-200/80'} shadow-xs hover:shadow-md transition flex flex-col justify-between`;
+                cardEl.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${item.level === 'HSK1' ? 'bg-sky-100 text-sky-800' : 'bg-indigo-100 text-indigo-800'}">${item.level}</span>
+                            <div class="flex items-center gap-1.5">
+                                <button onclick="toggleMasterWord(${item.id})" class="p-1 text-xs rounded-md ${isMastered ? 'text-emerald-600' : 'text-slate-300 hover:text-emerald-500'}" title="${isMastered ? 'Đã thuộc' : 'Đánh dấu đã thuộc'}">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </button>
+                                <button onclick="toggleFavorite(${item.id})" class="p-1 text-xs rounded-md ${isFavorite ? 'text-amber-400' : 'text-slate-300 hover:text-amber-400'}" title="Yêu thích">
+                                    <i class="fa-solid fa-star"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="text-center my-3 cursor-pointer" onclick="speakChinese('${item.hanzi}')">
+                            <div class="font-chinese text-4xl font-black text-slate-900 group-hover:text-vermilion-600 transition">${item.hanzi}</div>
+                            <div class="text-sm font-bold text-vermilion-600 mt-1">${item.pinyin}</div>
+                        </div>
+
+                        <div class="text-xs space-y-1 text-slate-600 pt-2 border-t border-slate-100">
+                            <div><span class="font-bold text-slate-700">Nghĩa:</span> ${item.meaning}</div>
+                            <div class="text-slate-400"><span class="font-medium">Hán Việt:</span> ${item.hanViet}</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-2 flex items-center justify-between">
+                        <button onclick="speakChinese('${item.hanzi}')" class="text-xs font-semibold text-slate-500 hover:text-vermilion-600 flex items-center gap-1 transition">
+                            <i class="fa-solid fa-volume-high"></i> Phát âm
+                        </button>
+                        <button onclick="loadToFocusCard(${item.id})" class="text-xs text-vermilion-600 hover:text-vermilion-800 font-bold">
+                            Học sâu →
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(cardEl);
+            });
+        }
+
+        function updateFocusCardDisplay() {
+            if (filteredVocabList.length === 0) return;
+            currentFocusCard = filteredVocabList[currentFocusIndex];
+            
+            // Track study record
+            if (!userState.studiedWords.includes(currentFocusCard.id)) {
+                userState.studiedWords.push(currentFocusCard.id);
+                saveState();
+            }
+
+            document.getElementById('focusHanzi').innerText = currentFocusCard.hanzi;
+            document.getElementById('focusPinyin').innerText = currentFocusCard.pinyin;
+            document.getElementById('focusMeaning').innerText = currentFocusCard.meaning;
+            document.getElementById('focusHanViet').innerText = currentFocusCard.hanViet;
+            document.getElementById('focusExampleZh').innerText = currentFocusCard.exampleZh;
+            document.getElementById('focusExampleVi').innerText = currentFocusCard.exampleVi;
+            document.getElementById('focusCardLevel').innerText = currentFocusCard.level;
+            document.getElementById('focusCardIndex').innerText = `${currentFocusIndex + 1} / ${filteredVocabList.length}`;
+
+            // Star state
+            const isFav = userState.favorites.includes(currentFocusCard.id);
+            const starBtn = document.getElementById('focusStarBtn');
+            starBtn.className = isFav ? "text-amber-400 text-lg transition p-1" : "text-slate-300 hover:text-amber-400 text-lg transition p-1";
+        }
+
+        function nextFocusCard() {
+            if (filteredVocabList.length === 0) return;
+            currentFocusIndex = (currentFocusIndex + 1) % filteredVocabList.length;
+            updateFocusCardDisplay();
+        }
+
+        function prevFocusCard() {
+            if (filteredVocabList.length === 0) return;
+            currentFocusIndex = (currentFocusIndex - 1 + filteredVocabList.length) % filteredVocabList.length;
+            updateFocusCardDisplay();
+        }
+
+        function loadToFocusCard(id) {
+            const idx = filteredVocabList.findIndex(v => v.id === id);
+            if (idx !== -1) {
+                currentFocusIndex = idx;
+                updateFocusCardDisplay();
+                window.scrollTo({ top: 120, behavior: 'smooth' });
+            }
+        }
+
+        let isCardFlipped = false;
+        function toggleFocusFlip() {
+            isCardFlipped = !isCardFlipped;
+            const cardEl = document.getElementById('focusFlipCard');
+            const front = document.getElementById('focusCardFront');
+            
+            if (isCardFlipped) {
+                front.innerHTML = `
+                    <div class="text-xs font-bold uppercase tracking-wider text-amber-600 mb-1">Ý nghĩa & Hán Việt</div>
+                    <div class="text-3xl font-black text-slate-800 mb-2">${currentFocusCard.meaning}</div>
+                    <div class="text-base text-slate-500 font-semibold mb-4">[ ${currentFocusCard.hanViet} ]</div>
+                    <div class="font-chinese text-base text-slate-700 bg-amber-50 px-4 py-2 rounded-xl border border-amber-200">
+                        ${currentFocusCard.exampleZh}
+                    </div>
+                `;
+            } else {
+                front.innerHTML = `
+                    <div class="font-chinese text-7xl sm:text-8xl font-black text-slate-900 tracking-wide select-none drop-shadow-sm">
+                        ${currentFocusCard.hanzi}
+                    </div>
+                    <div class="text-2xl font-bold text-vermilion-600 tracking-wide mt-2">
+                        ${currentFocusCard.pinyin}
+                    </div>
+                    <p class="text-xs text-slate-400 mt-2 flex items-center gap-1">
+                        <i class="fa-solid fa-rotate"></i> Chạm để lật xem nghĩa & câu ví dụ
+                    </p>
+                `;
+            }
+        }
+
+        function toggleStarCurrentFocus() {
+            if (!currentFocusCard) return;
+            toggleFavorite(currentFocusCard.id);
+            updateFocusCardDisplay();
+        }
+
+        function toggleFavorite(id) {
+            const index = userState.favorites.indexOf(id);
+            if (index > -1) {
+                userState.favorites.splice(index, 1);
+                showToast("Đã bỏ lưu khỏi danh sách yêu thích");
+            } else {
+                userState.favorites.push(id);
+                showToast("Đã thêm vào danh sách yêu thích!");
+            }
+            saveState();
+            renderFilteredCards();
+        }
+
+        function toggleMasterWord(id) {
+            const index = userState.masteredWords.indexOf(id);
+            if (index > -1) {
+                userState.masteredWords.splice(index, 1);
+                showToast("Đã bỏ đánh dấu thuộc từ");
+            } else {
+                userState.masteredWords.push(id);
+                showToast("Chúc mừng! Đã đánh dấu thuộc từ này 🎉");
+            }
+            saveState();
+            renderFilteredCards();
+        }
+
+        /**
+         * TAB 3: QUIZ SYSTEM
+         */
+        let currentQuizType = 'meaning'; // 'meaning' or 'tone'
+        let quizPool = [];
+        let currentQuizQuestionIndex = 0;
+        let quizScore = 0;
+        const QUIZ_LENGTH = 10;
+        let currentQuestion = null;
+        let isAnswerSubmitted = false;
+
+        function setQuizType(type) {
+            currentQuizType = type;
+            const btnMeaning = document.getElementById('quizType-meaning');
+            const btnTone = document.getElementById('quizType-tone');
+
+            if (type === 'meaning') {
+                btnMeaning.className = "flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs sm:text-sm font-bold bg-white text-vermilion-700 shadow-sm transition";
+                btnTone.className = "flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition";
+            } else {
+                btnTone.className = "flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs sm:text-sm font-bold bg-white text-vermilion-700 shadow-sm transition";
+                btnMeaning.className = "flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition";
+            }
+            initQuiz();
+        }
+
+        function initQuiz() {
+            // Shuffle full vocabulary to get questions
+            quizPool = [...VOCABULARY_DATA].sort(() => 0.5 - Math.random()).slice(0, QUIZ_LENGTH);
+            currentQuizQuestionIndex = 0;
+            quizScore = 0;
+            document.getElementById('quizCurrentScore').innerText = '0';
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            isAnswerSubmitted = false;
+            document.getElementById('quizNextBtn').classList.add('hidden');
+            const feedback = document.getElementById('quizFeedback');
+            feedback.className = "hidden mt-6 p-4 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2";
+
+            if (currentQuizQuestionIndex >= quizPool.length) {
+                // Completed quiz round
+                showQuizResultSummary();
+                return;
+            }
+
+            currentQuestion = quizPool[currentQuizQuestionIndex];
+            
+            // Update question & progress stats
+            document.getElementById('quizQuestionCount').innerText = `Câu ${currentQuizQuestionIndex + 1} / ${quizPool.length}`;
+            const percent = ((currentQuizQuestionIndex + 1) / quizPool.length) * 100;
+            document.getElementById('quizProgressBar').style.width = `${percent}%`;
+
+            const subtitle = document.getElementById('quizPromptSubtitle');
+            const hanziEl = document.getElementById('quizPromptHanzi');
+            const pinyinEl = document.getElementById('quizPromptPinyin');
+
+            hanziEl.innerText = currentQuestion.hanzi;
+            pinyinEl.innerText = currentQuestion.pinyin;
+
+            const optionsContainer = document.getElementById('quizOptionsContainer');
+            optionsContainer.innerHTML = '';
+
+            let choices = [];
+
+            if (currentQuizType === 'meaning') {
+                subtitle.innerText = "Hán tự dưới đây có ý nghĩa là gì?";
+                // Generate 3 random wrong meanings
+                const wrongAnswers = VOCABULARY_DATA
+                    .filter(v => v.id !== currentQuestion.id)
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 3)
+                    .map(v => v.meaning);
+
+                choices = [currentQuestion.meaning, ...wrongAnswers].sort(() => 0.5 - Math.random());
+
+                choices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = "quiz-choice-btn w-full p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:bg-white hover:border-vermilion-500 text-slate-800 font-semibold text-sm sm:text-base text-center transition shadow-2xs";
+                    btn.innerText = choice;
+                    btn.onclick = () => handleQuizAnswer(choice, currentQuestion.meaning, btn);
+                    optionsContainer.appendChild(btn);
+                });
+            } else {
+                // Tone Identification Mode
+                subtitle.innerText = "Xác định thanh điệu Pinyin của từ này:";
+                const toneLabels = [
+                    { key: "1", text: "Thanh 1 (Cao phẳng —)" },
+                    { key: "2", text: "Thanh 2 (Lên giọng ˊ)" },
+                    { key: "3", text: "Thanh 3 (Xuống rồi lên ˇ)" },
+                    { key: "4", text: "Thanh 4 (Dứt khoát rơi ˋ)" }
+                ];
+
+                // Determine dominant primary tone of word for single char or first tone
+                let correctToneKey = currentQuestion.toneType.charAt(0);
+                if (correctToneKey === '0') correctToneKey = '1';
+
+                toneLabels.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = "quiz-choice-btn w-full p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:bg-white hover:border-vermilion-500 text-slate-800 font-semibold text-sm sm:text-base text-center transition shadow-2xs";
+                    btn.innerText = choice.text;
+                    btn.onclick = () => handleQuizAnswer(choice.key, correctToneKey, btn);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function handleQuizAnswer(selected, correct, selectedBtn) {
+            if (isAnswerSubmitted) return;
+            isAnswerSubmitted = true;
+
+            const allButtons = document.querySelectorAll('.quiz-choice-btn');
+            const feedback = document.getElementById('quizFeedback');
+            const isCorrect = (selected === correct);
+
+            // Update user global stats
+            userState.quizStats.totalAttempts += 1;
+
+            if (isCorrect) {
+                quizScore += 10;
+                userState.quizStats.correctCount += 1;
+                document.getElementById('quizCurrentScore').innerText = quizScore;
+                selectedBtn.classList.remove('bg-slate-50', 'border-slate-200');
+                selectedBtn.classList.add('bg-emerald-500', 'border-emerald-600', 'text-white');
+                
+                feedback.className = "mt-6 p-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-base"></i> Chính xác! Tuyệt vời lắm.`;
+            } else {
+                selectedBtn.classList.remove('bg-slate-50', 'border-slate-200');
+                selectedBtn.classList.add('bg-rose-500', 'border-rose-600', 'text-white');
+
+                feedback.className = "mt-6 p-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 bg-rose-50 text-rose-800 border border-rose-200";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 text-base"></i> Chưa chính xác. Đáp án đúng là: <u>${correct}</u>`;
+            }
+
+            feedback.classList.remove('hidden');
+            document.getElementById('quizNextBtn').classList.remove('hidden');
+            saveState();
+        }
+
+        function nextQuizQuestion() {
+            currentQuizQuestionIndex++;
+            renderQuizQuestion();
+        }
+
+        function speakChineseCurrentQuiz() {
+            if (currentQuestion) {
+                speakChinese(currentQuestion.hanzi);
+            }
+        }
+
+        function showQuizResultSummary() {
+            const container = document.getElementById('quizOptionsContainer');
+            container.innerHTML = '';
+            document.getElementById('quizPromptSubtitle').innerText = "Hoàn thành bài tập!";
+            document.getElementById('quizPromptHanzi').innerText = "🏆";
+            document.getElementById('quizPromptPinyin').innerText = `Tổng điểm: ${quizScore} / ${QUIZ_LENGTH * 10}`;
+
+            const feedback = document.getElementById('quizFeedback');
+            feedback.className = "mt-6 p-5 rounded-2xl text-sm font-semibold bg-amber-50 text-amber-900 border border-amber-200";
+            feedback.innerHTML = `Bạn đã trả lời đúng ${quizScore / 10}/${QUIZ_LENGTH} câu hỏi. Hãy tiếp tục phát huy!`;
+            feedback.classList.remove('hidden');
+
+            const nextBtn = document.getElementById('quizNextBtn');
+            nextBtn.classList.remove('hidden');
+            nextBtn.innerHTML = `<span>Làm vòng mới</span> <i class="fa-solid fa-rotate-right"></i>`;
+            nextBtn.onclick = () => initQuiz();
+        }
+
+        /**
+         * Statistics & Progress UI
+         */
+        function updateUIStats() {
+            // Top Bar
+            document.getElementById('streakCount').innerText = userState.streak;
+            document.getElementById('masteredCount').innerText = userState.masteredWords.length;
+
+            // Progress Tab Elements
+            const statTotalStudied = document.getElementById('statTotalStudied');
+            if (statTotalStudied) {
+                statTotalStudied.innerText = userState.studiedWords.length;
+                document.getElementById('statMastered').innerText = userState.masteredWords.length;
+                document.getElementById('statFavorites').innerText = userState.favorites.length;
+
+                // Accuracy calculation
+                const attempts = userState.quizStats.totalAttempts;
+                const correct = userState.quizStats.correctCount;
+                const accuracy = attempts > 0 ? Math.round((correct / attempts) * 100) : 0;
+                document.getElementById('statAccuracy').innerText = `${accuracy}%`;
+
+                document.getElementById('statQuizTotalTries').innerText = `${attempts} lần`;
+                document.getElementById('statQuizCorrectAnswers').innerText = `${correct} câu`;
+
+                // Calculate total mastered completion percentage
+                const completionRate = Math.round((userState.masteredWords.length / VOCABULARY_DATA.length) * 100);
+                document.getElementById('circlePercentText').innerText = `${completionRate}%`;
+                
+                const circle = document.getElementById('progressCirclePath');
+                if (circle) {
+                    circle.setAttribute('stroke-dasharray', `${completionRate}, 100`);
+                }
+            }
+        }
+
+        function resetAllProgress() {
+            if (window.confirm ? confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử và tiến độ học tập để bắt đầu lại?") : true) {
+                userState = {
+                    streak: 1,
+                    lastVisitDate: new Date().toDateString(),
+                    masteredWords: [],
+                    favorites: [],
+                    studiedWords: [],
+                    quizStats: { totalAttempts: 0, correctCount: 0 }
+                };
+                saveState();
+                renderFilteredCards();
+                showToast("Đã khởi tạo lại toàn bộ tiến độ!", "info");
+            }
+        }
+
+        /**
+         * Toast Helper
+         */
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toastNotification');
+            const msgEl = document.getElementById('toastMessage');
+            const icon = document.getElementById('toastIcon');
+
+            msgEl.innerText = message;
+            if (type === 'error') {
+                icon.className = "fa-solid fa-circle-exclamation text-rose-400";
+            } else if (type === 'info') {
+                icon.className = "fa-solid fa-circle-info text-sky-400";
+            } else {
+                icon.className = "fa-solid fa-circle-check text-emerald-400";
+            }
+
+            toast.classList.remove('opacity-0', 'translate-y-20', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-20', 'pointer-events-none');
+            }, 2500);
+        }
+
+        /**
+         * Window Initialization
+         */
+        window.onload = function () {
+            loadState();
+            initVoices();
+            renderToneMatrix();
+            renderFilteredCards();
+            updateUIStats();
+        };
+    </script>
+</body>
+</html>
